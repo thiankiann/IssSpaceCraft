@@ -13,6 +13,9 @@ public class OpenNotifyConnector {
     private static final HttpRequest request =
             HttpRequest.newBuilder().GET().uri(URI.create("http://api.open-notify.org/astros.json")).build();
 
+  /*  private static final HttpRequest request2 =
+            HttpRequest.newBuilder().GET().uri(URI.create("http://api.open-notify.org/iss-now.json ")).build();  */
+
     private final ResponseFormatter responseFormatter;
 
     private final HttpClient httpClient;

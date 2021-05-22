@@ -1,8 +1,5 @@
 package mariusz_k;
 
-//import pl.aptewicz.sda.projectone.service.formatter.JsonResponseFormatter;
-//import pl.aptewicz.sda.projectone.service.http.OpenNotifyConnector;
-
 import mariusz_k.service.formatter.JsonResponseFormatter;
 import mariusz_k.service.http.OpenNotifyConnector;
 
