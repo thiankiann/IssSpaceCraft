@@ -9,5 +9,8 @@
         <module name="IssProject" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="IssProject" target="14" />
+    </bytecodeTargetLevel>
   </component>
 </project>

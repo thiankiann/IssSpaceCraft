@@ -1,8 +1,5 @@
 package mariusz_k;
 
-//import pl.aptewicz.sda.projectone.service.formatter.JsonResponseFormatter;
-//import pl.aptewicz.sda.projectone.service.http.OpenNotifyConnector;
-
 import mariusz_k.service.formatter.JsonResponseFormatter;
 import mariusz_k.service.http.OpenNotifyConnector;
 
@@ -62,7 +59,8 @@ public class Main {
     }
 
     private static void showCurrentLocationOfISS() {
-        System.out.println("Showing current location of ISS is not supported yet.");
+        final var openNotifyConnector = new OpenNotifyConnector(new JsonResponseFormatter(), httpClient);
+        System.out.println(openNotifyConnector.getIssPosition());
     }
 
     private static void showUnknownOperationInfo(String chosenOption) {
