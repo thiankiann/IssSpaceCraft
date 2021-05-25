@@ -59,7 +59,8 @@ public class Main {
     }
 
     private static void showCurrentLocationOfISS() {
-        System.out.println("Showing current location of ISS is not supported yet.");
+        final var openNotifyConnector = new OpenNotifyConnector(new JsonResponseFormatter(), httpClient);
+        System.out.println(openNotifyConnector.getIssPosition());
     }
 
     private static void showUnknownOperationInfo(String chosenOption) {
