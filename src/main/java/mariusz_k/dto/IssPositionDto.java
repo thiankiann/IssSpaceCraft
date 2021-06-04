@@ -42,12 +42,5 @@ public class IssPositionDto {
             return latitude;
         }
 
-        @Override
-        public String toString() {
-            return "IssPosition{" +
-                    "longitude=" + longitude +
-                    ", latitude=" + latitude +
-                    '}';
-        }
     }
 }

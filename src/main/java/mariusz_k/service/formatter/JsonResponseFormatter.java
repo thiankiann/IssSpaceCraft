@@ -28,7 +28,7 @@ public class JsonResponseFormatter implements ResponseFormatter {
         final var issPosition = gson.fromJson(json, IssPositionDto.class);
         final var timestamp = issPosition.getTimestamp();
         final var date = Instant.ofEpochSecond(timestamp).atZone(ZoneId.systemDefault());
-        return String.format("Currently [ date :  %s ] position is %s %s ",date,
+        return String.format("Currently [ date :  %s ] position is %s %s ", date,
                 issPosition.getIssPosition().getLatitude(),
                 issPosition.getIssPosition().getLongitude());
     }
