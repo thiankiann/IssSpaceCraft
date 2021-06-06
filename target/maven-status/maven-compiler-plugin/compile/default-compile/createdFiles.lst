@@ -1,0 +1,16 @@
+mariusz_k\view\PeopleInSpaceView.class
+mariusz_k\dto\PeopleInSpaceDto.class
+mariusz_k\dto\IssPositionDto$IssPosition.class
+mariusz_k\service\formatter\ResponseFormatter.class
+mariusz_k\service\formatter\JsonResponseFormatter.class
+mariusz_k\service\mapper\JsonMapper.class
+mariusz_k\service\mapper\GsonJsonMapper.class
+mariusz_k\Main.class
+mariusz_k\controller\PeopleInSpaceController.class
+mariusz_k\service\http\OpenNotifyConnector.class
+mariusz_k\entity\PeopleInSpaceEntity.class
+mariusz_k\entity\PeopleInSpaceEntity$HumanInSpaceEntity.class
+mariusz_k\service\mapper\PeopleInSpaceDtoViewMapper.class
+mariusz_k\dto\IssPositionDto.class
+mariusz_k\dto\PeopleInSpaceDto$HumanInSpace.class
+mariusz_k\view\PeopleInSpaceView$HumanInSpaceView.class

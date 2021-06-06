@@ -1,12 +1,18 @@
 package mariusz_k.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PeopleInSpaceDto {
     private final int number;
     private final List<HumanInSpace> people;
 
-    public PeopleInSpaceDto(int number, List<HumanInSpace> people) {
+    @JsonCreator
+    public PeopleInSpaceDto(@JsonProperty("number") int number, @JsonProperty("people") List<HumanInSpace> people) {
         this.number = number;
         this.people = people;
     }
@@ -14,7 +20,7 @@ public class PeopleInSpaceDto {
     public int getNumber() {
         return number;
     }
-
+   // @JsonIgnoreProperties(ignoreUnknown = true)
     public List<HumanInSpace> getPeople() {
         return people;
     }
@@ -22,9 +28,10 @@ public class PeopleInSpaceDto {
     public static class HumanInSpace {
         private final String craft;
 
-        private final String name;
+        public final String name;
 
-        HumanInSpace(String craft, String name) {
+        @JsonCreator
+        HumanInSpace(@JsonProperty String craft, @JsonProperty String name) {
             this.craft = craft;
             this.name = name;
         }
