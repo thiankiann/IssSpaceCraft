@@ -5,6 +5,7 @@ import mariusz_k.service.mapper.PeopleInSpaceDtoViewMapper;
 
 public class PeopleInSpaceController {
 
+
     private final OpenNotifyConnector openNotifyConnector;
     private final PeopleInSpaceDtoViewMapper dtoViewMapper;
 
@@ -14,7 +15,6 @@ public class PeopleInSpaceController {
     }
 
     public String getPeopleInSpaceInfo() throws Exception {
-
         final var result = this.openNotifyConnector.getPeopleInSpace();
         final var view = result.map(dtoViewMapper::mapDtoToView )
                 .orElseThrow(() -> new Exception("Unable to get info about people in space."));

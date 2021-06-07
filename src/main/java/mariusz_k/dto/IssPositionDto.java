@@ -1,5 +1,6 @@
 package mariusz_k.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,7 +11,7 @@ public class IssPositionDto {
     private final IssPosition issPosition;
     private final long timestamp;
 
-
+    @JsonCreator
     public IssPositionDto(IssPosition issPosition, long timestamp) {
         this.issPosition = issPosition;
         this.timestamp = timestamp;

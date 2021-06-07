@@ -20,7 +20,7 @@ public class PeopleInSpaceDto {
     public int getNumber() {
         return number;
     }
-   // @JsonIgnoreProperties(ignoreUnknown = true)
+   @JsonIgnoreProperties(ignoreUnknown = true)
     public List<HumanInSpace> getPeople() {
         return people;
     }
@@ -28,10 +28,10 @@ public class PeopleInSpaceDto {
     public static class HumanInSpace {
         private final String craft;
 
-        public final String name;
+        private final String name;
 
         @JsonCreator
-        HumanInSpace(@JsonProperty String craft, @JsonProperty String name) {
+        public HumanInSpace(@JsonProperty("craft") String craft, @JsonProperty("name") String name) {
             this.craft = craft;
             this.name = name;
         }
