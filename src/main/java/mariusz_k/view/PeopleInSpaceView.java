@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PeopleInSpaceView {
@@ -39,5 +40,31 @@ public class PeopleInSpaceView {
         public String getName() {
             return name;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof HumanInSpaceView)) return false;
+            HumanInSpaceView that = (HumanInSpaceView) o;
+            return Objects.equals(craft, that.craft) && Objects.equals(name, that.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(craft, name);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PeopleInSpaceView)) return false;
+        PeopleInSpaceView that = (PeopleInSpaceView) o;
+        return number == that.number && Objects.equals(people, that.people);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number, people);
     }
 }

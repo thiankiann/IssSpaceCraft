@@ -2,6 +2,7 @@ package mariusz_k.controller;
 
 import mariusz_k.service.http.OpenNotifyConnector;
 import mariusz_k.service.mapper.PeopleInSpaceDtoViewMapper;
+import mariusz_k.view.PeopleInSpaceView;
 
 public class PeopleInSpaceController {
 
@@ -14,10 +15,12 @@ public class PeopleInSpaceController {
         this.dtoViewMapper = dtoViewMapper;
     }
 
-    public String getPeopleInSpaceInfo() throws Exception {
+    public PeopleInSpaceView getPeopleInSpaceInfo() throws Exception {
         final var result = this.openNotifyConnector.getPeopleInSpace();
-        final var view = result.map(dtoViewMapper::mapDtoToView )
+       /* final var view = result.map(dtoViewMapper::mapDtoToView )
                 .orElseThrow(() -> new Exception("Unable to get info about people in space."));
-        return view.getInfoAboutPeopleInSpace();
+        return view.getInfoAboutPeopleInSpace();*/
+        return result.map(dtoViewMapper::mapDtoToView)
+                .orElseThrow(() -> new Exception("Unable to get info about people in space "));
     }
 }
