@@ -1,10 +1,12 @@
 package mariusz_k;
 
-//import pl.aptewicz.sda.projectone.service.formatter.JsonResponseFormatter;
-//import pl.aptewicz.sda.projectone.service.http.OpenNotifyConnector;
-
+import mariusz_k.controller.PeopleInSpaceController;
 import mariusz_k.service.formatter.JsonResponseFormatter;
 import mariusz_k.service.http.OpenNotifyConnector;
+import mariusz_k.service.mapper.GsonJsonMapper;
+import mariusz_k.service.mapper.JacksonJsonMapper;
+import mariusz_k.service.mapper.JsonMapper;
+import mariusz_k.service.mapper.PeopleInSpaceDtoViewMapper;
 
 import java.net.http.HttpClient;
 import java.time.Duration;
@@ -14,6 +16,12 @@ public class Main {
     private static final HttpClient httpClient =
             HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).connectTimeout(Duration.ofSeconds(10)).build();
 
+    private static final JsonMapper jsonMapper = new GsonJsonMapper();
+    //private static final JsonMapper jsonMapper = new JacksonJsonMapper();
+    private static final OpenNotifyConnector openNotifyConnector = new OpenNotifyConnector(httpClient, jsonMapper);
+    private static final PeopleInSpaceDtoViewMapper peopleInSpaceDtoViewMapper = new PeopleInSpaceDtoViewMapper();
+    private static final PeopleInSpaceController peopleInSpaceController =
+            new PeopleInSpaceController(openNotifyConnector, peopleInSpaceDtoViewMapper);
     private static final Scanner keyboardScanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -27,7 +35,7 @@ public class Main {
                     waitForUserAcknowledge();
                     break;
                 case "2":
-                    showCurrentLocationOfISS();
+                   // showCurrentLocationOfISS();
                     waitForUserAcknowledge();
                     break;
                 case "3":
@@ -57,14 +65,20 @@ public class Main {
     }
 
     private static void showPeopleInSpace() {
-        final var openNotifyConnector = new OpenNotifyConnector(new JsonResponseFormatter(), httpClient);
-        System.out.println(openNotifyConnector.getPeopleInSpace());
-    }
+        try {
+            final var peopleInSpaceInfo = peopleInSpaceController.getPeopleInSpaceInfo();
+            System.out.println(peopleInSpaceInfo.getInfoAboutPeopleInSpace());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
 
+    }
+/*
     private static void showCurrentLocationOfISS() {
-        System.out.println("Showing current location of ISS is not supported yet.");
+        final var openNotifyConnector = new OpenNotifyConnector(new JsonResponseFormatter(), httpClient);
+        System.out.println(openNotifyConnector.getIssPosition());
     }
-
+*/
     private static void showUnknownOperationInfo(String chosenOption) {
         final var unknownOperationInfo =
                 String.format("\"%s\" option is unknown. Please specify one of the menu options!", chosenOption);

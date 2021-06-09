@@ -1,41 +1,47 @@
 package mariusz_k.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.gson.annotations.SerializedName;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class IssPositionDto {
-    private final int timestamp;
 
-    private final IssPosition position;
+    @SerializedName("iss_position")
+    private final IssPosition issPosition;
+    private final long timestamp;
 
-    public IssPositionDto(int timestamp, IssPosition position) {
+    @JsonCreator
+    public IssPositionDto(IssPosition issPosition, long timestamp) {
+        this.issPosition = issPosition;
         this.timestamp = timestamp;
-        this.position = position;
     }
 
-    public int getTimestamp() {
+
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public IssPosition getPosition() {
-        return position;
+    public IssPosition getIssPosition() {
+        return issPosition;
     }
 
     public static class IssPosition {
 
 
-        private final long longitude ;
+        private final double longitude ;
+        private final double latitude;
 
-
-        private final long latitude;
-
-        public IssPosition(long longitude, long latitude) {
+        public IssPosition(double longitude, double latitude) {
             this.longitude = longitude;
             this.latitude = latitude;
         }
 
-        public long getLongitude() {
+        public double getLongitude() {
             return longitude;
         }
 
-        public long getLatitude() {
+        public double getLatitude() {
             return latitude;
         }
 
