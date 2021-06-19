@@ -1,8 +1,9 @@
 package mariusz_k.service.http;
 
+import mariusz_k.dto.IssPositionDto;
 import mariusz_k.dto.PeopleInSpaceDto;
-import mariusz_k.service.formatter.ResponseFormatter;
 import mariusz_k.service.mapper.JsonMapper;
+import mariusz_k.view.IssPositionView;
 
 import java.io.IOException;
 import java.net.URI;
@@ -19,7 +20,6 @@ public class OpenNotifyConnector {
    private static final HttpRequest request2 =
             HttpRequest.newBuilder().GET().uri(URI.create("http://api.open-notify.org/iss-now.json")).build();
 
-  //  private final ResponseFormatter responseFormatter;
 
     private final HttpClient httpClient;
     private final JsonMapper jsonMapper;
@@ -41,16 +41,19 @@ public class OpenNotifyConnector {
             return Optional.empty();
         }
     }
-/*    //change later using mapper instead formatter
-    public String getIssPosition() {
+    //change later using mapper instead formatter
+    public Optional<IssPositionDto> getIssPosition() {
         try {
             final var response2 = httpClient.send(request2, HttpResponse.BodyHandlers.ofString());
-        return responseFormatter.formatIssPosition(response2);
+            if (response2.statusCode() == 200 ) {
+                return Optional.of(jsonMapper.mapIssPositionDtoFromJason(response2.body()));  //!! chyba ten mapper nie dziala
+            }
+            return Optional.empty();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-            return "Error while getting I ss Position.";
+            return Optional.empty();
         }
 
     }
- */
+
 }
