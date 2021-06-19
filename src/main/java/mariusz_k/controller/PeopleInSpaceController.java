@@ -17,9 +17,6 @@ public class PeopleInSpaceController {
 
     public PeopleInSpaceView getPeopleInSpaceInfo() throws Exception {
         final var result = this.openNotifyConnector.getPeopleInSpace();
-       /* final var view = result.map(dtoViewMapper::mapDtoToView )
-                .orElseThrow(() -> new Exception("Unable to get info about people in space."));
-        return view.getInfoAboutPeopleInSpace();*/
         return result.map(dtoViewMapper::mapDtoToView)
                 .orElseThrow(() -> new Exception("Unable to get info about people in space "));
     }
