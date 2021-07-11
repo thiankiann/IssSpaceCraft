@@ -11,8 +11,8 @@ public class PeopleInSpaceView {
     private final int number;
 
     private final List<HumanInSpaceView> people;
-    @JsonCreator
-    public PeopleInSpaceView(@JsonProperty int number, @JsonProperty List<HumanInSpaceView> people) {
+
+    public PeopleInSpaceView(int number, List<HumanInSpaceView> people) {
         this.number = number;
         this.people = people;
     }
@@ -23,12 +23,13 @@ public class PeopleInSpaceView {
                 .collect(Collectors.joining()));
     }
 
+
     public static class HumanInSpaceView {
         private final String craft;
 
         private final String name;
-        @JsonCreator
-        public HumanInSpaceView(@JsonProperty String craft,@JsonProperty String name) {
+
+        public HumanInSpaceView(String craft, String name) {
             this.craft = craft;
             this.name = name;
         }
@@ -43,8 +44,10 @@ public class PeopleInSpaceView {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof HumanInSpaceView)) return false;
+            if (this == o)
+                return true;
+            if (!(o instanceof HumanInSpaceView))
+                return false;
             HumanInSpaceView that = (HumanInSpaceView) o;
             return Objects.equals(craft, that.craft) && Objects.equals(name, that.name);
         }
@@ -57,8 +60,10 @@ public class PeopleInSpaceView {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PeopleInSpaceView)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof PeopleInSpaceView))
+            return false;
         PeopleInSpaceView that = (PeopleInSpaceView) o;
         return number == that.number && Objects.equals(people, that.people);
     }

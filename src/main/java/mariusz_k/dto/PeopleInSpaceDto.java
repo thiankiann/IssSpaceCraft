@@ -9,6 +9,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PeopleInSpaceDto {
     private final int number;
+
     private final List<HumanInSpace> people;
 
     @JsonCreator
@@ -20,7 +21,7 @@ public class PeopleInSpaceDto {
     public int getNumber() {
         return number;
     }
-   @JsonIgnoreProperties(ignoreUnknown = true)
+
     public List<HumanInSpace> getPeople() {
         return people;
     }
@@ -45,4 +46,5 @@ public class PeopleInSpaceDto {
         }
     }
 }
+
 
