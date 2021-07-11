@@ -10,7 +10,7 @@ public class GsonJsonMapper implements JsonMapper{
     private final Gson gson = new Gson();
 
     @Override
-    public PeopleInSpaceDto mapFromJson(String json) {
+    public PeopleInSpaceDto mapPeopleInSpaceFromJson(String json) {
         return gson.fromJson(json,PeopleInSpaceDto.class);
     }
 

@@ -16,8 +16,8 @@ public class IssPositionController {
     }
 
     public  IssPositionView getIssPositionView() throws Exception {
-        //TODO: implement method like  PeopleInSpaceController                    // done
-      //  throw new UnsupportedOperationException();                              // to bylo jak metoda niemiala ciala - zeby przeszlo kompilowanie
+
+      //  throw new UnsupportedOperationException();                              // to bylo jak metoda nie miala ciala - zeby przeszlo kompilowanie
         final var result = this.openNotifyConnector.getIssPosition();
         return result.map(mapper::mapDtoToView)
                 .orElseThrow(() -> new Exception("Unable to get info about people in space "));

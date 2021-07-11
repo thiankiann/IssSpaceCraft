@@ -14,7 +14,7 @@ public class JacksonJsonMapper implements JsonMapper {
     }
 
     @Override
-    public PeopleInSpaceDto mapFromJson(String json) {
+    public PeopleInSpaceDto mapPeopleInSpaceFromJson(String json) {
         try {
             return objectMapper.readValue(json, PeopleInSpaceDto.class);
         } catch (JsonProcessingException e) {

@@ -14,14 +14,15 @@ import java.util.Optional;
 
 public class OpenNotifyConnector {
 
-    private static final HttpRequest request =
-            HttpRequest.newBuilder().GET().uri(URI.create("http://api.open-notify.org/astros.json")).build();
 
-   private static final HttpRequest request2 =
+
+    private static final HttpRequest getPeopleInSpaceRequest =
+            HttpRequest.newBuilder().GET().uri(URI.create("http://api.open-notify.org/astros.json")).build();
+    private static final HttpRequest getIssPositionRequest =
             HttpRequest.newBuilder().GET().uri(URI.create("http://api.open-notify.org/iss-now.json")).build();
 
-
     private final HttpClient httpClient;
+
     private final JsonMapper jsonMapper;
 
     public OpenNotifyConnector(HttpClient httpClient, JsonMapper jsonMapper) {
@@ -31,29 +32,28 @@ public class OpenNotifyConnector {
 
     public Optional<PeopleInSpaceDto> getPeopleInSpace() {
         try {
-            final var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            if (response.statusCode() == 200 ) {
-                return Optional.of(jsonMapper.mapFromJson(response.body()));
+            final var response = httpClient.send(getPeopleInSpaceRequest, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                return Optional.ofNullable(jsonMapper.mapPeopleInSpaceFromJson(response.body()));
             }
             return Optional.empty();
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            // add logging of exception
             return Optional.empty();
         }
     }
-    //change later using mapper instead formatter
+
     public Optional<IssPositionDto> getIssPosition() {
         try {
-            final var response2 = httpClient.send(request2, HttpResponse.BodyHandlers.ofString());
-            if (response2.statusCode() == 200 ) {
-                return Optional.of(jsonMapper.mapIssPositionDtoFromJason(response2.body()));  //!! chyba ten mapper nie dziala
+            final var response2 = httpClient.send(getIssPositionRequest, HttpResponse.BodyHandlers.ofString());
+            if (response2.statusCode() == 200) {
+                return Optional.ofNullable(jsonMapper.mapIssPositionDtoFromJason(response2.body()));
             }
             return Optional.empty();
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
             return Optional.empty();
         }
-
     }
+
 
 }
