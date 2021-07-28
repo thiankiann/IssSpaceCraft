@@ -10,16 +10,20 @@ import mariusz_k.service.logger.LoggerService;
 import mariusz_k.service.mapper.HumanInSpaceEntityMapper;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.sql.DriverManager.getConnection;
 
 
 public class HumanInSpaceMySqlRepository implements HumanInSpaceRepository{
-
     private static final String TABLE = "human_in_space";
+
     private final HumanInSpaceEntityMapper mapper;
+
     private final LoggerService loggerService;
+
     private final DBSetup dbSetup;
 
     public HumanInSpaceMySqlRepository(HumanInSpaceEntityMapper mapper, LoggerService loggerService, DBSetup dbSetup) {
@@ -30,34 +34,51 @@ public class HumanInSpaceMySqlRepository implements HumanInSpaceRepository{
 
     @Override
     public void savePeopleInSpace(List<HumanInSpaceEntity> peopleInSpace) {
-        try (final var ps = getConnection().prepareStatement("INSERT INTO" + "TABLE" +"VALUES(?)")) {
+        try (final var ps = getConnection().prepareStatement("INSERT INTO " + TABLE + " VALUES(?, ?, ?, ?)")) {
             getConnection().setAutoCommit(false);
-            for (final var entity : peopleInSpace) {
+
+            for (final HumanInSpaceEntity entity : peopleInSpace) {
                 ps.setString(1, entity.getId().toString());
                 ps.setString(2, entity.getName());
                 ps.setString(3, entity.getCraft());
                 ps.setLong(4, entity.getExpTime());
                 ps.execute();
-
             }
-        }catch(SQLException e){
-            try{
+
+            getConnection().commit();
+        } catch (SQLException e) {
+            try {
                 getConnection().rollback();
             } catch (SQLException rollbackException) {
                 loggerService.logError("savePeopleInSpace rollback failed!", rollbackException);
             }
-            loggerService.logError("savePeopleInSpace with entities" + peopleInSpace + "failed!", e);
+            loggerService.logError("savePeopleInSpace with entities " + peopleInSpace + " failed!", e);
+        } finally {
+            try {
+                getConnection().setAutoCommit(true);
+            } catch (SQLException e) {
+                loggerService.logError("Unable to set auto commit back to true!", e);
+            }
         }
     }
 
-
     @Override
     public List<HumanInSpaceEntity> getPeopleInSpace() {
-        return null;
+        final var peopleInSpace = new ArrayList<HumanInSpaceEntity>();
+        try (final var ps = getConnection().prepareStatement("SELECT * FROM " + TABLE + " WHERE exp_time > ?")) {
+            ps.setLong(1, Instant.now().getEpochSecond());
+            final var resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                peopleInSpace.add(mapper.mapFromResultSet(resultSet));
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            loggerService.logError("getPeopleInSpace failed!", e);
+        }
+        return peopleInSpace;
     }
 
     private Connection getConnection() {
         return this.dbSetup.getDbConnection();
     }
-
 }

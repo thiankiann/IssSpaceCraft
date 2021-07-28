@@ -14,7 +14,8 @@ public class PeopleInSpaceController {
 
     private final PeopleInSpaceDtoViewMapper dtoViewMapper;
 
-    public PeopleInSpaceController(PeopleInSpaceService peopleInSpaceService, PeopleInSpaceDtoViewMapper dtoViewMapper) {
+    public PeopleInSpaceController(PeopleInSpaceService peopleInSpaceService,
+                                   PeopleInSpaceDtoViewMapper dtoViewMapper) {
         this.peopleInSpaceService = peopleInSpaceService;
         this.dtoViewMapper = dtoViewMapper;
     }
