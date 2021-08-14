@@ -37,7 +37,7 @@ public class PeopleInSpaceService {
 
         final var result = this.openNotifyConnector.getPeopleInSpace();
         // @formatter:off
-        result.ifPresent(dto -> {
+        result.ifPresent(dto -> {                 // jesli !=null to rob 
             List<HumanInSpaceEntity> peopleInSpaceEntities = dto.getPeople().stream()
                     .map(humanInSpaceDto ->
                             humanInSpaceEntityMapper.mapFromDto(

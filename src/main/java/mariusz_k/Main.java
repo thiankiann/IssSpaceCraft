@@ -6,6 +6,9 @@ import mariusz_k.controller.PeopleInSpaceController;
 import mariusz_k.db.DBSetup;
 import mariusz_k.repository.HumanInSpaceMySqlRepository;
 import mariusz_k.repository.HumanInSpaceRepository;
+import mariusz_k.repository.IssPositionMySqlRepository;
+import mariusz_k.repository.IssPositionRepository;
+import mariusz_k.service.IssPositionService;
 import mariusz_k.service.PeopleInSpaceService;
 import mariusz_k.service.cli.CliArgsParser;
 import mariusz_k.service.http.OpenNotifyConnector;
@@ -38,10 +41,10 @@ public class Main {
     private static final OpenNotifyConnector openNotifyConnector = new OpenNotifyConnector(httpClient, jsonMapper);
 
     private static final PeopleInSpaceDtoViewMapper peopleInSpaceDtoViewMapper = new PeopleInSpaceDtoViewMapper();
+    private static final IssPositionDtoViewMapper issPositionDtoViewMapper = new IssPositionDtoViewMapper();
 
     private static final HumanInSpaceEntityMapper humanInSpaceEntityMapper = new HumanInSpaceEntityMapper();
-
-    private static final IssPositionDtoViewMapper issPositionDtoViewMapper = new IssPositionDtoViewMapper();
+    private static final IssPositionEntityMapper issPositionEntityMapper = new IssPositionEntityMapper();
 
     private static final Scanner keyboardScanner = new Scanner(System.in);
 
@@ -50,13 +53,14 @@ public class Main {
     private static DBSetup dbSetup;
 
     private static HumanInSpaceRepository humanInSpaceRepository;
+    private static IssPositionRepository issPositionRepository;   //d
 
 
     private static PeopleInSpaceService peopleInSpaceService;
+    private static IssPositionService issPositionService;
 
 
     private static PeopleInSpaceController peopleInSpaceController;
-
     private static IssPositionController issPositionController;
 
 
@@ -111,12 +115,13 @@ public class Main {
                     appConfig.getDbName(), loggerService);
 
             humanInSpaceRepository = new HumanInSpaceMySqlRepository(humanInSpaceEntityMapper, loggerService, dbSetup);
+            issPositionRepository = new IssPositionMySqlRepository(issPositionEntityMapper,loggerService,dbSetup);  //d
 
             peopleInSpaceService = new PeopleInSpaceService(openNotifyConnector, humanInSpaceRepository, humanInSpaceEntityMapper);
+            issPositionService = new IssPositionService(openNotifyConnector, issPositionEntityMapper, issPositionRepository);  //d
 
             peopleInSpaceController = new PeopleInSpaceController(peopleInSpaceService, peopleInSpaceDtoViewMapper);
-
-            issPositionController = new IssPositionController(openNotifyConnector, issPositionDtoViewMapper);
+            issPositionController = new IssPositionController(openNotifyConnector,issPositionService ,issPositionDtoViewMapper );
 
 
         } catch (SQLException e) {
@@ -136,8 +141,8 @@ public class Main {
         final var menu = "Choose menu option:\n" +
                 "1 - show people in space\n" +
                 "2 - show current location of ISS\n" +
-                "3 - show the current ISS speed\n" +
-                "4 - exit";
+                "3 - - exit";
+
         // @formatter:on
         System.out.println(menu);
     }
